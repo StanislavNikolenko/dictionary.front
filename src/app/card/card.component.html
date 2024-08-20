@@ -1,12 +1,9 @@
-
-    <div class="container">
-      @for (concept of concepts; track concept._id) {
-        <div class="item" (click)="onConceptSelect(concept.name)"> 
-          <a routerLink="word/details/{{concept.name}}">
-          {{ concept.name }}
-        </a>
-        </div>
-      }
+<div class="container">
+  @for (concept of concepts; track concept._id) {
+    <div class="item" (click)="onConceptSelect(concept.name)">
+      <a routerLink="word/details/{{ concept.name }}">
+        {{ concept.name }}
+      </a>
     </div>
-
-
+  }
+</div>
