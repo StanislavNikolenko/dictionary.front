@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RouterOutlet, RouterLink } from "@angular/router";
+import { ApiService } from "../api.service";
 
 @Component({
   selector: "word",
@@ -10,21 +11,18 @@ import { RouterOutlet, RouterLink } from "@angular/router";
   styleUrl: "./word.component.css",
 })
 export class WordComponent {
-  conceptName: string | null = null;
+  conceptName: string = "";
+  words: [] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+  ) {}
 
   ngOnInit() {
-    console.log("word component");
-    this.conceptName = this.route.snapshot.paramMap.get("conceptName");
-    console.log("Concept Name:", this.conceptName);
-    // this.apiService.getAllConcepts(userId, concept).subscribe(concepts => {
-    //   this.concepts = concepts;
-    //   //console.log('concepts:', concepts);
-    // concepts.map((concept: any ) => {
-    //   console.log('concept:', concept);
-    //   return concept;
-    // });
-    // });
+    this.conceptName = String(this.route.snapshot.paramMap.get("conceptName"));
+    this.apiService
+      .getConceptWords(this.conceptName)
+      .subscribe((words) => (this.words = words));
   }
 }

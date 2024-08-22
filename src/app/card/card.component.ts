@@ -24,14 +24,8 @@ export class CardComponent {
   ) {}
   ngOnInit() {
     const userId = "66b8bd3ed774a68a42fd372e";
-    const concept = "pencil";
-    this.apiService.getAllConcepts(userId, concept).subscribe((concepts) => {
+    this.apiService.getAllConcepts(userId).subscribe((concepts) => {
       this.concepts = concepts;
-      //console.log('concepts:', concepts);
-      // concepts.map((concept: any ) => {
-      //   console.log('concept:', concept);
-      //   return concept;
-      // });
     });
   }
   onConceptSelect(conceptName: string) {

@@ -1,4 +1,9 @@
-<div class="word">
+<div class="container">
   {{ conceptName }} details
+  @for (word of words; track word) {
+    <div class="item">
+      {{ word }}
+    </div>
+  }
   <a routerLink="">back</a>
 </div>
