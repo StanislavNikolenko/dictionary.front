@@ -1,9 +1,10 @@
 <div class="container">
-  {{ conceptName }} details
+  <div class="back-button">
+    <a routerLink="">&#8592; back</a>
+  </div>
   @for (word of words; track word) {
     <div class="item">
       {{ word }}
     </div>
   }
-  <a routerLink="">back</a>
 </div>
