@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="button">
+    <a routerLink="word/create">add new word</a>
+  </div>
   @for (concept of concepts; track concept._id) {
     <div class="item" (click)="onConceptSelect(concept.name)">
       <a routerLink="word/details/{{ concept.name }}">

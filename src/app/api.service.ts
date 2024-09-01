@@ -2,6 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
+type Word = {
+  user: string;
+  concept: string;
+  language: string;
+  value: string;
+};
+
 @Injectable({
   providedIn: "root",
 })
@@ -17,6 +24,10 @@ export class ApiService {
 
   getConceptWords(conceptName: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`);
+  }
+
+  addNewWord(word: Word): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/words/`, word);
   }
 
   postSomeData(data: any): Observable<any> {

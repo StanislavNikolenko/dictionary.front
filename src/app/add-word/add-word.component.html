@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="back-button">
+    <a routerLink="">&#8592; back</a>
+  </div>
+  <form (submit)="addWord()" [formGroup]="addWordForm">
+    <div class="form-group">
+      <label for="word-language">Language:</label>
+      <select
+        name="languages"
+        id="languages"
+        formControlName="wordLanguage"
+        required
+      >
+        <option value="Russian">Russian</option>
+        <option value="Armenian">Armenian</option>
+        <option value="Spanish">Spanish</option>
+        <option value="French">French</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="word-value">Word:</label>
+      <input id="word-value" type="text" formControlName="wordValue" required />
+    </div>
+    <div class="form-group">
+      <label for="word-translation">Translation:</label>
+      <input
+        id="word-translation"
+        type="text"
+        formControlName="wordTranslation"
+        required
+      />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  <app-spinner [isLoading]="isLoading"></app-spinner>
+</div>

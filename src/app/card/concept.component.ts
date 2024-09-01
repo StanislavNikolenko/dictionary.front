@@ -12,8 +12,8 @@ type Word = {
   selector: "app-card",
   standalone: true,
   imports: [RouterOutlet, RouterLink],
-  templateUrl: "./card.component.html",
-  styleUrl: "./card.component.css",
+  templateUrl: "./concept.component.html",
+  styleUrl: "./concept.component.css",
 })
 export class CardComponent {
   concepts: any[] = [];
@@ -22,14 +22,15 @@ export class CardComponent {
     private apiService: ApiService,
     private router: Router,
   ) {}
+
   ngOnInit() {
     const userId = "66b8bd3ed774a68a42fd372e";
     this.apiService.getAllConcepts(userId).subscribe((concepts) => {
       this.concepts = concepts;
     });
   }
+
   onConceptSelect(conceptName: string) {
-    console.log("concept:", conceptName);
     this.router.navigate(["word/details", conceptName]);
   }
 }
