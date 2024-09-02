@@ -33,4 +33,8 @@ export class ApiService {
   postSomeData(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
   }
+
+  removeConcept(conceptId: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/concepts/${conceptId}`);
+  }
 }

@@ -3,10 +3,36 @@
     <a routerLink="word/create">add new word</a>
   </div>
   @for (concept of concepts; track concept._id) {
-    <div class="item" (click)="onConceptSelect(concept.name)">
-      <a routerLink="word/details/{{ concept.name }}">
-        {{ concept.name }}
-      </a>
+    <div class="item-container">
+      <div class="item" (click)="onConceptSelect(concept.name)">
+        <a routerLink="word/details/{{ concept.name }}">
+          {{ concept.name }}
+        </a>
+      </div>
+      <button
+        class="delete-btn"
+        (click)="openDeleteModal(concept); $event.stopPropagation()"
+      >
+        <i class="fas fa-times"></i>
+      </button>
     </div>
   }
 </div>
+
+<!-- Add this modal at the end of the file -->
+@if (showDeleteModal) {
+  <div class="modal">
+    <div class="modal-content">
+      <h2>Confirm Deletion</h2>
+      <p>
+        Are you sure you want to delete the concept "{{
+          conceptToDelete?.name
+        }}"?
+      </p>
+      <div class="modal-buttons">
+        <button (click)="confirmDelete()">Yes, Delete</button>
+        <button (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+}

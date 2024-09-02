@@ -15,8 +15,10 @@ type Word = {
   templateUrl: "./concept.component.html",
   styleUrl: "./concept.component.css",
 })
-export class CardComponent {
+export class ConceptComponent {
   concepts: any[] = [];
+  showDeleteModal = false;
+  conceptToDelete: any = null;
 
   constructor(
     private apiService: ApiService,
@@ -32,5 +34,42 @@ export class CardComponent {
 
   onConceptSelect(conceptName: string) {
     this.router.navigate(["word/details", conceptName]);
+  }
+
+  openDeleteModal(concept: any) {
+    this.showDeleteModal = true;
+    this.conceptToDelete = concept;
+  }
+
+  confirmDelete() {
+    if (this.conceptToDelete) {
+      this.onDeleteConcept(this.conceptToDelete._id).subscribe({
+        next: () => {
+          this.closeModal();
+          this.refreshPage();
+        },
+        error: (error) => {
+          console.error("Error deleting concept:", error);
+        },
+      });
+    }
+  }
+
+  refreshPage() {
+    // This will reload the current route
+    window.location.reload();
+  }
+
+  cancelDelete() {
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.showDeleteModal = false;
+    this.conceptToDelete = null;
+  }
+
+  onDeleteConcept(conceptId: string) {
+    return this.apiService.removeConcept(conceptId);
   }
 }
