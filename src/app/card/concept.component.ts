@@ -15,6 +15,7 @@ type Word = {
   templateUrl: "./concept.component.html",
   styleUrl: "./concept.component.css",
 })
+
 export class ConceptComponent {
   concepts: any[] = [];
   showDeleteModal = false;
