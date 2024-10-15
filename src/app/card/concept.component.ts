@@ -40,7 +40,8 @@ export class ConceptComponent {
 
   confirmDelete() {
     if (this.conceptToDelete) {
-      this.onDeleteConcept(this.conceptToDelete._id).subscribe({
+      const token = this.authService.getToken();
+      this.onDeleteConcept(this.conceptToDelete._id, token!).subscribe({
         next: () => {
           this.closeModal();
           this.refreshPage();
@@ -53,7 +54,6 @@ export class ConceptComponent {
   }
 
   refreshPage() {
-    // This will reload the current route
     window.location.reload();
   }
 
@@ -66,7 +66,12 @@ export class ConceptComponent {
     this.conceptToDelete = null;
   }
 
-  onDeleteConcept(conceptId: string) {
-    return this.apiService.removeConcept(conceptId);
+  onDeleteConcept(conceptId: string, token: string) {
+    return this.apiService.removeConcept(conceptId, token);
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.refreshPage();
   }
 }

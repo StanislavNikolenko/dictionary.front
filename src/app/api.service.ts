@@ -12,18 +12,19 @@ type Word = {
   providedIn: "root",
 })
 export class ApiService {
-  private apiUrl = "http://localhost:3000"; // Base URL of your NestJS API
+  private apiUrl = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 
   getAllConcepts(token: string): Observable<any> {
-    const headers = { Authorization: `Bearer ${token}` }; // Create headers with Bearer token
-    const words = this.http.get<any>(`${this.apiUrl}/concepts/users`, { headers }); // Pass headers in the request
+    const headers = { Authorization: `Bearer ${token}` }; 
+    const words = this.http.get<any>(`${this.apiUrl}/concepts/users`, { headers });
     return words;
   }
 
   getConceptWords(conceptName: string, token: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`);
+    const headers = { Authorization: `Bearer ${token}` }; 
+    return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`, { headers });
   }
 
   addNewWord(word: Word, token: string): Observable<any> {
@@ -31,11 +32,8 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/words/`, word, { headers });
   }
 
-  postSomeData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/endpoint`, data);
-  }
-
-  removeConcept(conceptId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/concepts/${conceptId}`);
+  removeConcept(conceptId: string, token: string): Observable<any> {
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.delete<any>(`${this.apiUrl}/concepts/${conceptId}`, { headers });
   }
 }

@@ -2,6 +2,9 @@
   <div class="button">
     <a routerLink="word/create">add new word</a>
   </div>
+  <div class="button">
+    <div (click)="onLogout()">Log out</div>
+  </div>
   @for (concept of concepts; track concept._id) {
     <div class="item-container">
       <div class="item" (click)="onConceptSelect(concept.name)">
