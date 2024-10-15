@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
   selector: "app-card",
@@ -18,10 +19,11 @@ export class ConceptComponent {
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    const token = localStorage.getItem('auth_token');
+    const token = this.authService.getToken();
     this.apiService.getAllConcepts(token!).subscribe((concepts) => {
       this.concepts = concepts;
     });

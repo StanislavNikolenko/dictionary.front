@@ -9,6 +9,7 @@ import { throwError } from 'rxjs';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private apiUrl = "http://localhost:3000";
+  private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient) {
     this.checkAuthStatus();
@@ -16,7 +17,7 @@ export class AuthService {
 
   private checkAuthStatus(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('auth_token');
+      const token = this.getToken();
       this.loggedIn.next(!!token);
     }
   }
@@ -33,7 +34,7 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, data).pipe(
       tap((response: any) => {
         if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('auth_token', response.access_token);
+          this.setToken(response.access_token);
         }
         this.loggedIn.next(true);
       }),
@@ -53,7 +54,7 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/users`, data).pipe(
       tap((response: any) => {
         if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('auth_token', response.access_token);
+          this.setToken(response.access_token);
         }
         this.loggedIn.next(true);
       }),
@@ -65,7 +66,7 @@ export class AuthService {
 
   logout(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('auth_token');
+      this.clearToken();
     }
     this.loggedIn.next(false);
   }
@@ -76,5 +77,17 @@ export class AuthService {
 
   getAuthStatus(): Observable<boolean> {
     return this.loggedIn.asObservable();
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(this.tokenKey);
   }
 }
