@@ -2,12 +2,6 @@ import { Component } from "@angular/core";
 import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 
-type Word = {
-  user: string;
-  language: string;
-  value: string;
-};
-
 @Component({
   selector: "app-card",
   standalone: true,
@@ -27,8 +21,8 @@ export class ConceptComponent {
   ) {}
 
   ngOnInit() {
-    const userId = "66b8bd3ed774a68a42fd372e";
-    this.apiService.getAllConcepts(userId).subscribe((concepts) => {
+    const token = localStorage.getItem('auth_token');
+    this.apiService.getAllConcepts(token!).subscribe((concepts) => {
       this.concepts = concepts;
     });
   }

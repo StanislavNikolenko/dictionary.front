@@ -26,17 +26,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    console.log('login');
     const data = {
         email: email,
         password: password
     };
-    console.log('data', data);
-    const url = `${this.apiUrl}/auth/login`;
-    console.log('url:', url);
     return this.http.post<any>(`${this.apiUrl}/auth/login`, data).pipe(
       tap((response: any) => {
-        console.log('response', response);
         if (typeof window !== 'undefined' && window.localStorage) {
           localStorage.setItem('auth_token', response.access_token);
         }
@@ -45,6 +40,25 @@ export class AuthService {
       catchError((error) => {
         console.error('Login error', error);
         return throwError(error); // Propagate the error
+      })
+    );
+  }
+
+  signup(email: string, password: string, username: string): Observable<any> {
+    const data = {
+        name: username,
+        email: email,
+        password: password
+    };
+    return this.http.post<any>(`${this.apiUrl}/users`, data).pipe(
+      tap((response: any) => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('auth_token', response.access_token);
+        }
+        this.loggedIn.next(true);
+      }),
+      catchError((error) => {
+        return throwError(error);
       })
     );
   }

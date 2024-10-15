@@ -3,7 +3,6 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 type Word = {
-  user: string;
   concept: string;
   language: string;
   value: string;
@@ -17,17 +16,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getAllConcepts(userId: string): Observable<any> {
-    const words = this.http.get<any>(`${this.apiUrl}/concepts/users/${userId}`);
+  getAllConcepts(token: string): Observable<any> {
+    const headers = { Authorization: `Bearer ${token}` }; // Create headers with Bearer token
+    const words = this.http.get<any>(`${this.apiUrl}/concepts/users`, { headers }); // Pass headers in the request
     return words;
   }
 
-  getConceptWords(conceptName: string): Observable<any> {
+  getConceptWords(conceptName: string, token: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`);
   }
 
-  addNewWord(word: Word): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/words/`, word);
+  addNewWord(word: Word, token: string): Observable<any> {
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post<any>(`${this.apiUrl}/words/`, word, { headers });
   }
 
   postSomeData(data: any): Observable<any> {

@@ -23,7 +23,6 @@ export class AddWordComponent {
 
   addWord() {
     const newWord = {
-      user: "66b8bd3ed774a68a42fd372e",
       concept: String(
         this.addWordForm.value.wordTranslation ?? "",
       ).toLocaleLowerCase(),
@@ -32,11 +31,11 @@ export class AddWordComponent {
       ).toLocaleLowerCase(),
       value: String(this.addWordForm.value.wordValue ?? "").toLocaleLowerCase(),
     };
+    const token = localStorage.getItem('auth_token');
     this.isLoading = true;
-    this.apiService.addNewWord(newWord).subscribe(
+    this.apiService.addNewWord(newWord, token!).subscribe(
       (response) => {
         this.addWordForm.reset();
-        console.log("response", response);
         alert("New word has been created successfully!");
         this.isLoading = false;
       },

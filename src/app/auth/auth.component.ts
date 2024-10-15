@@ -17,6 +17,7 @@ export class AuthComponent {
     email: new FormControl(""),
     password: new FormControl(""),
     wordTranslation: new FormControl(""),
+    username: new FormControl("")
   });
   isLogin: boolean = true;
 
@@ -24,7 +25,7 @@ export class AuthComponent {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    const { email, password } = this.authForm.value;
+    const { email, password, username } = this.authForm.value;
     if (this.isLogin) {
       this.authService.login(email!, password!).subscribe({
         next: response => {
@@ -34,13 +35,21 @@ export class AuthComponent {
        error: error => {
           console.error('Login failed');
         }
-    })
-    } else {
-      console.log('Sign Up', email, password);
+    })} else {
+      this.authService.signup(email!, password!, username!).subscribe({
+        next: response => {
+          console.log('signup is successfull');
+          this.router.navigate(['/']);
+        },
+       error: error => {
+          console.error('Sign Up failed');
+        }
+      })
     }
   }
-
-  toggleAuthMode() {
+  
+  toggleAuthMode(event: Event) {
+    event.preventDefault();
     this.isLogin = !this.isLogin;
   }
 }

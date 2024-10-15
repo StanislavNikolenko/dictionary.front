@@ -20,9 +20,10 @@ export class WordComponent {
   ) {}
 
   ngOnInit() {
+    const token = localStorage.getItem('auth_token');
     this.conceptName = String(this.route.snapshot.paramMap.get("conceptName"));
     this.apiService
-      .getConceptWords(this.conceptName)
+      .getConceptWords(this.conceptName, token!)
       .subscribe((words) => (this.words = words));
   }
 }
