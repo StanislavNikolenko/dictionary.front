@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { RouterLink, RouterOutlet } from "@angular/router";
-import { ConceptComponent } from "./card/concept.component";
+import { ConceptComponent } from "./concept/concept.component";
 import { WordComponent } from "./word/word.component";
 import { SpinnerComponent } from "./spinner/spinner.component";
 

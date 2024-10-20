@@ -1,0 +1,148 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  .item-container {
+    display: flex;
+    width: 20%;
+    height: 5%;
+    align-items: center;
+    flex-direction: row;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+  }
+  
+  .item {
+    width: 100%;
+    margin: 10px;
+    padding: 20px;
+    /* border: 1px solid #ccc;
+    border-radius: 25px; */
+    cursor: pointer;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+  }
+
+/* word component */
+/*  .container {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .item {
+    width: 30%;
+  }*/
+/* word component */
+
+  .button {
+    width: 30%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+  }
+
+  .modal-buttons {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .modal-buttons button {
+    margin-left: 10px;
+  }
+
+  /* Add these styles to position the buttons */
+  .logout-button {
+    position: absolute;
+    width: 25px;
+    top: 20px;
+    right: 10px;
+    border-radius: 10px;
+  }
+
+  .add-word-button {
+    width: 80px; /* Set width */
+    height: 80px; /* Set height */
+    border-radius: 50%; /* Make it a circle */
+    position: absolute;
+    top: 50%;
+    right: 300px;
+    transform: translateY(-50%);
+    display: flex; /* Use flexbox to center the content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 50px; /* Adjust font size for visibility */
+  }
+
+  /* Add this to your styles.css or component-specific styles */
+  .delete-icon {
+    color: rgb(62, 81, 183); /* Change color to red */
+    font-size: 24px; /* Increase size */
+    transition: transform 0.2s; /* Add a transition effect */
+    border: none; /* Remove border */
+    background: none; /* Remove background */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    display: inline-flex; /* Ensure it does not create a block */
+    align-items: center; /* Center vertically if needed */
+    justify-content: center; /* Center horizontally if needed */
+  }
+
+  .delete-icon:hover {
+    transform: scale(1.1); /* Scale up on hover */
+  }
+
+  .mat-fab {
+    background-color: transparent; /* Remove background color */
+    border: none; /* Remove border */
+    box-shadow: none; /* Remove shadow */
+    padding: 0; /* Remove padding */
+    width: auto; /* Set width to auto */
+    height: auto; /* Set height to auto */
+    cursor: pointer; /* Add this line to change cursor to hand */
+  }

@@ -1,10 +1,14 @@
 <div class="container">
-  <div class="button">
-    <a routerLink="word/create">add new word</a>
+  <div class="button logout-button">
+    <div (click)="onLogout()">
+      <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+    </div>
   </div>
-  <div class="button">
-    <div (click)="onLogout()">Log out</div>
+  <div class="button add-word-button">
+    <a routerLink="word/create">+
+    </a>
   </div>
+
   @for (concept of concepts; track concept._id) {
     <div class="item-container">
       <div class="item" (click)="onConceptSelect(concept.name)">
@@ -13,10 +17,10 @@
         </a>
       </div>
       <button
-        class="delete-btn"
+        mat-fab class="mat-fab"
         (click)="openDeleteModal(concept); $event.stopPropagation()"
       >
-        <i class="fas fa-times"></i>
+      <mat-icon class="delete-icon">delete</mat-icon>
       </button>
     </div>
   }
@@ -39,3 +43,4 @@
     </div>
   </div>
 }
+

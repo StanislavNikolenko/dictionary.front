@@ -2,11 +2,12 @@ import { Component } from "@angular/core";
 import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: "app-card",
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, MatIconModule],
   templateUrl: "./concept.component.html",
   styleUrl: "./concept.component.css",
 })
