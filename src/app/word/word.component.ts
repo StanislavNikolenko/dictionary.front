@@ -18,7 +18,7 @@ export class WordComponent {
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {

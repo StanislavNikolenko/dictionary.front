@@ -17,14 +17,18 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getAllConcepts(token: string): Observable<any> {
-    const headers = { Authorization: `Bearer ${token}` }; 
-    const words = this.http.get<any>(`${this.apiUrl}/concepts/users`, { headers });
+    const headers = { Authorization: `Bearer ${token}` };
+    const words = this.http.get<any>(`${this.apiUrl}/concepts/users`, {
+      headers,
+    });
     return words;
   }
 
   getConceptWords(conceptName: string, token: string): Observable<any> {
-    const headers = { Authorization: `Bearer ${token}` }; 
-    return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`, { headers });
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`, {
+      headers,
+    });
   }
 
   addNewWord(word: Word, token: string): Observable<any> {
@@ -34,6 +38,8 @@ export class ApiService {
 
   removeConcept(conceptId: string, token: string): Observable<any> {
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.delete<any>(`${this.apiUrl}/concepts/${conceptId}`, { headers });
+    return this.http.delete<any>(`${this.apiUrl}/concepts/${conceptId}`, {
+      headers,
+    });
   }
 }

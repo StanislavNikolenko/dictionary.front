@@ -31,7 +31,7 @@ export class AddWordComponent {
       ).toLocaleLowerCase(),
       value: String(this.addWordForm.value.wordValue ?? "").toLocaleLowerCase(),
     };
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem("auth_token");
     this.isLoading = true;
     this.apiService.addNewWord(newWord, token!).subscribe(
       (response) => {

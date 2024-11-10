@@ -6,9 +6,17 @@ import { AuthComponent } from "./auth/auth.component";
 import { AuthGuard } from "./auth/auth.guard";
 
 export const routes: Routes = [
-  { path: "", component: ConceptComponent, canActivate: [AuthGuard] }, 
+  { path: "", component: ConceptComponent, canActivate: [AuthGuard] },
   { path: "auth", component: AuthComponent },
-  { path: "word/details/:conceptName", component: WordComponent, canActivate: [AuthGuard] },
-  { path: "word/create", component: AddWordComponent, canActivate: [AuthGuard] },
-  { path: "**", redirectTo: "auth" }
+  {
+    path: "word/details/:conceptName",
+    component: WordComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "word/create",
+    component: AddWordComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: "**", redirectTo: "auth" },
 ];

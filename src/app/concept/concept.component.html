@@ -1,12 +1,22 @@
 <div class="container">
   <div class="button logout-button">
     <div (click)="onLogout()">
-      <i class="fas fa-sign-out-alt"></i> <!-- Logout icon -->
+      <i class="fas fa-sign-out-alt"></i>
     </div>
   </div>
+
+  <h4>Select language</h4>
+  <mat-form-field>
+    <mat-label>Language</mat-label>
+    <mat-select>
+      @for (language of languages; track language) {
+        <mat-option [value]="language.code">{{ language.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
   <div class="button add-word-button">
-    <a routerLink="word/create">+
-    </a>
+    <a routerLink="word/create">+ </a>
   </div>
 
   @for (concept of concepts; track concept._id) {
@@ -17,10 +27,11 @@
         </a>
       </div>
       <button
-        mat-fab class="mat-fab"
+        mat-fab
+        class="mat-fab"
         (click)="openDeleteModal(concept); $event.stopPropagation()"
       >
-      <mat-icon class="delete-icon">delete</mat-icon>
+        <mat-icon class="delete-icon">delete</mat-icon>
       </button>
     </div>
   }
@@ -43,4 +54,3 @@
     </div>
   </div>
 }
-
