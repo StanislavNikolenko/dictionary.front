@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from "@angular/core";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
-import { RouterOutlet, RouterLink } from "@angular/router";
 import { ApiService } from "../api.service";
 import { AuthService } from "../auth/auth.service";
 
-
 @Component({
-  selector: "word",
+  selector: 'app-word-modal',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
-  templateUrl: "./word.component.html",
-  styleUrl: "./word.component.css",
+  imports: [],
+  templateUrl: './word-modal.component.html',
+  styleUrl: './word-modal.component.css'
 })
-export class WordComponent {
+
+export class WordModalComponent {
   word: string = "";
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { wordId: string },
     private route: ActivatedRoute,
     private apiService: ApiService,
     private authService: AuthService,
@@ -23,7 +24,8 @@ export class WordComponent {
 
   ngOnInit() {
     const token = this.authService.getToken();
-    const wordId = String(this.route.snapshot.paramMap.get("wordId"));
+    console.log('data wordId:', this.data.wordId);
+    const wordId = this.data.wordId;
     this.apiService
       .getConceptWords(wordId, token!)
       .subscribe((data) => {

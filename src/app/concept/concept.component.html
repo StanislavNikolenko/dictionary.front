@@ -21,8 +21,8 @@
 
   @for (word of words; track word._id) {
     <div class="item-container">
-      <div class="item" (click)="onConceptSelect(word._id)">
-        <a routerLink="word/details/{{ word._id }}">
+      <div class="item" (click)="openDialog(word._id)">
+        <a>
           {{ word.value }}
         </a>
       </div>

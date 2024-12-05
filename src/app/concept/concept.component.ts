@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {ChangeDetectionStrategy, Component, inject, model, signal} from '@angular/core';
 import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
@@ -9,6 +9,16 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { languages } from "../data/languages";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { WordModalComponent } from '../word-modal/word-modal.component';
 
 interface Language {
   code: string;
@@ -38,6 +48,10 @@ export class ConceptComponent {
   languages: Language[] = languages;
   currentLanguage = 'Armenian';
 
+  readonly animal = signal('');
+  readonly name = model('');
+  readonly dialog = inject(MatDialog);
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -56,6 +70,20 @@ export class ConceptComponent {
           };
         });
       });
+    });
+  }
+
+  openDialog(wordId: string): void {
+    console.log('open dialog wordId:', wordId);
+    const dialogRef = this.dialog.open(WordModalComponent, {
+      data: { wordId: wordId },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // if (result !== undefined) {
+      //   this.animal.set(result);
+      // }
     });
   }
 
