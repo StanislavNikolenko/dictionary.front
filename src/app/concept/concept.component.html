@@ -8,9 +8,9 @@
   <h4>Select language</h4>
   <mat-form-field>
     <mat-label>Language</mat-label>
-    <mat-select>
+    <mat-select [(value)]="currentLanguage" (selectionChange)="onLanguageChange($event)">
       @for (language of languages; track language) {
-        <mat-option [value]="language.code">{{ language.name }}</mat-option>
+        <mat-option [value]="language.name">{{ language.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
@@ -19,17 +19,17 @@
     <a routerLink="word/create">+ </a>
   </div>
 
-  @for (concept of concepts; track concept._id) {
+  @for (word of words; track word._id) {
     <div class="item-container">
-      <div class="item" (click)="onConceptSelect(concept.name)">
-        <a routerLink="word/details/{{ concept.name }}">
-          {{ concept.name }}
+      <div class="item" (click)="onConceptSelect(word._id)">
+        <a routerLink="word/details/{{ word._id }}">
+          {{ word.value }}
         </a>
       </div>
       <button
         mat-fab
         class="mat-fab"
-        (click)="openDeleteModal(concept); $event.stopPropagation()"
+        (click)="openDeleteModal(word); $event.stopPropagation()"
       >
         <mat-icon class="delete-icon">delete</mat-icon>
       </button>

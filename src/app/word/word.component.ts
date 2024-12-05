@@ -12,8 +12,7 @@ import { AuthService } from "../auth/auth.service";
   styleUrl: "./word.component.css",
 })
 export class WordComponent {
-  conceptName: string = "";
-  words: [] = [];
+  word: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +22,11 @@ export class WordComponent {
 
   ngOnInit() {
     const token = this.authService.getToken();
-    this.conceptName = String(this.route.snapshot.paramMap.get("conceptName"));
+    const wordId = String(this.route.snapshot.paramMap.get("wordId"));
     this.apiService
-      .getConceptWords(this.conceptName, token!)
-      .subscribe((words) => (this.words = words));
+      .getConceptWords(wordId, token!)
+      .subscribe((data) => {
+        this.word = data.value;
+      });
   }
 }

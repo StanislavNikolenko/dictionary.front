@@ -3,6 +3,7 @@ import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
 import { MatIconModule } from "@angular/material/icon";
+import { MatSelectChange } from '@angular/material/select';
 import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
@@ -31,9 +32,11 @@ interface Language {
 })
 export class ConceptComponent {
   concepts: any[] = [];
+  words: any[] = [];
   showDeleteModal = false;
   conceptToDelete: any = null;
   languages: Language[] = languages;
+  currentLanguage = 'Armenian';
 
   constructor(
     private apiService: ApiService,
@@ -45,11 +48,39 @@ export class ConceptComponent {
     const token = this.authService.getToken();
     this.apiService.getAllConcepts(token!).subscribe((concepts) => {
       this.concepts = concepts;
+      console.log('concepts:', concepts);
+      this.concepts.forEach((concept) => {
+        concept.words.forEach((word: any) => {
+          if(word.language === this.currentLanguage) {
+            this.words.push(word);
+          };
+        });
+      });
     });
   }
 
-  onConceptSelect(conceptName: string) {
-    this.router.navigate(["word/details", conceptName]);
+  onLanguageChange(event: any) {
+    this.currentLanguage = event.value;
+    console.log('set current language to', this.currentLanguage);
+    this.updateDisplayedItems();
+  }
+
+  updateDisplayedItems() {
+    console.log('this.words:', this.words);
+    const newWords:any = [];
+    this.concepts.forEach((concept) => {
+      concept.words.forEach((word: any) => {
+        if(word.language === this.currentLanguage) {
+          newWords.push(word);
+        };
+      });
+    });
+    console.log('newWords:', newWords);
+    this.words = newWords;
+  }
+
+  onConceptSelect(wordId: string) {
+    this.router.navigate(["word/details", wordId]);
   }
 
   openDeleteModal(concept: any) {

@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: "", component: ConceptComponent, canActivate: [AuthGuard] },
   { path: "auth", component: AuthComponent },
   {
-    path: "word/details/:conceptName",
+    path: "word/details/:wordId",
     component: WordComponent,
     canActivate: [AuthGuard],
   },

@@ -24,9 +24,10 @@ export class ApiService {
     return words;
   }
 
-  getConceptWords(conceptName: string, token: string): Observable<any> {
+  getConceptWords(wordId: string, token: string): Observable<any> {
+    console.log('get the word:', wordId);
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.get<any>(`${this.apiUrl}/concepts/${conceptName}`, {
+    return this.http.get<any>(`${this.apiUrl}/words/${wordId}`, {
       headers,
     });
   }
