@@ -30,6 +30,9 @@ export class AddWordComponent {
         this.addWordForm.value.wordLanguage ?? "",
       ).toLocaleLowerCase(),
       value: String(this.addWordForm.value.wordValue ?? "").toLocaleLowerCase(),
+      translation: String(
+        this.addWordForm.value.wordTranslation ?? "",
+      ).toLocaleLowerCase(),
     };
     const token = localStorage.getItem("auth_token");
     this.isLoading = true;

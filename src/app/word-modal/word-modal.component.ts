@@ -30,6 +30,7 @@ export class WordModalComponent {
       .getConceptWords(wordId, token!)
       .subscribe((data) => {
         this.word = data.value;
+        console.log('modal word:', this.word);
       });
   }
 }

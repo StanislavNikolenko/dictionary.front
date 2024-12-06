@@ -19,9 +19,9 @@
     <a routerLink="word/create">+ </a>
   </div>
 
-  @for (word of words; track word._id) {
+  @for (word of wordsToDisplay; track word._id) {
     <div class="item-container">
-      <div class="item" (click)="openDialog(word._id)">
+      <div class="item" (click)="openDialog(word)">
         <a>
           {{ word.value }}
         </a>

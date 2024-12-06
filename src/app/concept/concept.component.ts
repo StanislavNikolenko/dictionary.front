@@ -42,7 +42,8 @@ interface Language {
 })
 export class ConceptComponent {
   concepts: any[] = [];
-  words: any[] = [];
+  allUserwords: any[] = [];
+  wordsToDisplay: any[] = [];
   showDeleteModal = false;
   conceptToDelete: any = null;
   languages: Language[] = languages;
@@ -60,23 +61,20 @@ export class ConceptComponent {
 
   ngOnInit() {
     const token = this.authService.getToken();
-    this.apiService.getAllConcepts(token!).subscribe((concepts) => {
-      this.concepts = concepts;
-      console.log('concepts:', concepts);
-      this.concepts.forEach((concept) => {
-        concept.words.forEach((word: any) => {
+    this.apiService.getUserWords(token!).subscribe((userWords) => {
+      this.allUserwords = userWords;
+      this.allUserwords.forEach((word:any) => {
           if(word.language === this.currentLanguage) {
-            this.words.push(word);
+            this.wordsToDisplay.push(word);
           };
-        });
       });
     });
   }
 
-  openDialog(wordId: string): void {
-    console.log('open dialog wordId:', wordId);
+  openDialog(word: any): void {
+    console.log('open dialog word:', word);
     const dialogRef = this.dialog.open(WordModalComponent, {
-      data: { wordId: wordId },
+      data: { wordId: word._id },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -89,22 +87,17 @@ export class ConceptComponent {
 
   onLanguageChange(event: any) {
     this.currentLanguage = event.value;
-    console.log('set current language to', this.currentLanguage);
     this.updateDisplayedItems();
   }
 
   updateDisplayedItems() {
-    console.log('this.words:', this.words);
     const newWords:any = [];
-    this.concepts.forEach((concept) => {
-      concept.words.forEach((word: any) => {
-        if(word.language === this.currentLanguage) {
-          newWords.push(word);
-        };
-      });
+    this.allUserwords.forEach((word: any) => {
+      if(word.language === this.currentLanguage) {
+        newWords.push(word);
+      };
     });
-    console.log('newWords:', newWords);
-    this.words = newWords;
+    this.wordsToDisplay = newWords;
   }
 
   onConceptSelect(wordId: string) {
