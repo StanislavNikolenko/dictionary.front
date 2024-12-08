@@ -8,7 +8,10 @@
   <h4>Select language</h4>
   <mat-form-field>
     <mat-label>Language</mat-label>
-    <mat-select [(value)]="currentLanguage" (selectionChange)="onLanguageChange($event)">
+    <mat-select
+      [(value)]="currentLanguage"
+      (selectionChange)="onLanguageChange($event)"
+    >
       @for (language of languages; track language) {
         <mat-option [value]="language.name">{{ language.name }}</mat-option>
       }

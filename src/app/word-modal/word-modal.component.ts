@@ -1,36 +1,32 @@
-import { Component, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ActivatedRoute } from "@angular/router";
-import { ApiService } from "../api.service";
-import { AuthService } from "../auth/auth.service";
+import { Component, Inject, inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-word-modal',
+  selector: "app-word-modal",
   standalone: true,
   imports: [],
-  templateUrl: './word-modal.component.html',
-  styleUrl: './word-modal.component.css'
+  templateUrl: "./word-modal.component.html",
+  styleUrl: "./word-modal.component.css",
 })
-
 export class WordModalComponent {
-  word: string = "";
+  name: string = "";
+  translation: string = "";
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { wordId: string },
-    private route: ActivatedRoute,
-    private apiService: ApiService,
-    private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { wordId: string; translation: string; name: string },
   ) {}
 
   ngOnInit() {
-    const token = this.authService.getToken();
-    console.log('data wordId:', this.data.wordId);
-    const wordId = this.data.wordId;
-    this.apiService
-      .getConceptWords(wordId, token!)
-      .subscribe((data) => {
-        this.word = data.value;
-        console.log('modal word:', this.word);
-      });
+    this.translation = this.data.translation;
+    this.name = this.data.name;
+  }
+
+  readonly dialogRef = inject(MatDialogRef<WordModalComponent>);
+  // readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  // readonly animal = model(this.data.animal);
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

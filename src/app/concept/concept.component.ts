@@ -1,24 +1,24 @@
-import {ChangeDetectionStrategy, Component, inject, model, signal} from '@angular/core';
+import {
+  Component,
+  inject,
+  model,
+  signal,
+} from "@angular/core";
 import { ApiService } from "../api.service";
 import { Router, RouterLink, RouterOutlet } from "@angular/router";
 import { AuthService } from "../auth/auth.service";
 import { MatIconModule } from "@angular/material/icon";
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelectChange } from "@angular/material/select";
 import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { languages } from "../data/languages";
 import {
-  MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
-import { WordModalComponent } from '../word-modal/word-modal.component';
+  MatDialogConfig
+} from "@angular/material/dialog";
+import { WordModalComponent } from "../word-modal/word-modal.component";
 
 interface Language {
   code: string;
@@ -42,15 +42,15 @@ interface Language {
 })
 export class ConceptComponent {
   concepts: any[] = [];
-  allUserwords: any[] = [];
+  allUserWords: any[] = [];
   wordsToDisplay: any[] = [];
   showDeleteModal = false;
   conceptToDelete: any = null;
   languages: Language[] = languages;
-  currentLanguage = 'Armenian';
+  currentLanguage = "Armenian";
 
-  readonly animal = signal('');
-  readonly name = model('');
+  readonly animal = signal("");
+  readonly name = model("");
   readonly dialog = inject(MatDialog);
 
   constructor(
@@ -62,26 +62,31 @@ export class ConceptComponent {
   ngOnInit() {
     const token = this.authService.getToken();
     this.apiService.getUserWords(token!).subscribe((userWords) => {
-      this.allUserwords = userWords;
-      this.allUserwords.forEach((word:any) => {
-          if(word.language === this.currentLanguage) {
-            this.wordsToDisplay.push(word);
-          };
+      this.allUserWords = userWords;
+      console.log("this.allUserWords:", this.allUserWords);
+      this.allUserWords.forEach((word: any) => {
+        if (
+          word.language.toLowerCase() === this.currentLanguage.toLowerCase()
+        ) {
+          this.wordsToDisplay.push(word);
+        }
       });
     });
   }
 
   openDialog(word: any): void {
-    console.log('open dialog word:', word);
-    const dialogRef = this.dialog.open(WordModalComponent, {
-      data: { wordId: word._id },
-    });
+    console.log("open dialog word:", word);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true; 
+    dialogConfig.data = {
+      wordId: word._id,
+      name: word.value,
+      translation: word.translation,
+    };
+    const dialogRef = this.dialog.open(WordModalComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // if (result !== undefined) {
-      //   this.animal.set(result);
-      // }
+    dialogRef.afterClosed().subscribe(() => {
+      console.log("The dialog was closed");
     });
   }
 
@@ -91,11 +96,11 @@ export class ConceptComponent {
   }
 
   updateDisplayedItems() {
-    const newWords:any = [];
-    this.allUserwords.forEach((word: any) => {
-      if(word.language === this.currentLanguage) {
+    const newWords: any = [];
+    this.allUserWords.forEach((word: any) => {
+      if (word.language.toLowerCase() === this.currentLanguage.toLowerCase()) {
         newWords.push(word);
-      };
+      }
     });
     this.wordsToDisplay = newWords;
   }

@@ -33,7 +33,7 @@ export class ApiService {
   }
 
   getConceptWords(wordId: string, token: string): Observable<any> {
-    console.log('get the word:', wordId);
+    console.log("get the word:", wordId);
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get<any>(`${this.apiUrl}/words/${wordId}`, {
       headers,
